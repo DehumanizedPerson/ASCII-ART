@@ -76,12 +76,30 @@ def process_image():
             save_ascii_image(ascii_image)
     except Exception as e:
         print(f"Error opening image: {e}")
+def toggle_theme():
+    global dark_mode
+    if dark_mode:
+        root.configure(bg="#f0f0f0")
+        process_button.config(bg="#d1d1d1", fg="black", activebackground="#a0a0a0")
+        image_label.config(bg="#f0f0f0")
+        ascii_text.config(bg="#ffffff", fg="black", insertbackground="black")
+        dark_mode = False
+    else:
+        root.configure(bg="#2e2e2e")
+        process_button.config(bg="#3e3e3e", fg="white", activebackground="#505050")
+        image_label.config(bg="#2e2e2e")
+        ascii_text.config(bg="#333333", fg="white", insertbackground="white")
+        dark_mode = True
+dark_mode = True
 root = tk.Tk()
 root.title("Image to ASCII Art")
-process_button = tk.Button(root, text="Select Image and Generate ASCII Art", command=process_image)
+root.configure(bg="#2e2e2e")
+process_button = tk.Button(root, text="Generate ASCII Art", command=process_image, bg="#3e3e3e", fg="white", activebackground="#505050", font=("Arial", 12))
 process_button.pack(pady=10)
-image_label = tk.Label(root)
+image_label = tk.Label(root, bg="#2e2e2e")
 image_label.pack(padx=10, pady=10)
-ascii_text = tk.Text(root, width=80, height=20)
+ascii_text = tk.Text(root, width=80, height=20, bg="#333333", fg="white", font=("Courier", 10), insertbackground="white", wrap="word")
 ascii_text.pack(padx=10, pady=10)
+theme_button = tk.Button(root, text="Toggle Theme", command=toggle_theme, bg="#3e3e3e", fg="white", activebackground="#505050", font=("Arial", 12))
+theme_button.pack(side="bottom", pady=10)
 root.mainloop()
